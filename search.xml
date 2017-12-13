@@ -6,15 +6,16 @@
     <content type="text"><![CDATA[Welcome to Hexo! This is your very first post. Check documentation for more info. If you get any problems when using Hexo, you can find the answer in troubleshooting or you can ask me on GitHub. Quick StartCreate a new post1$ hexo new "My New Post" More info: Writing Run server1$ hexo server More info: Server Generate static files1$ hexo generate More info: Generating Deploy to remote sites1$ hexo deploy More info: Deployment]]></content>
   </entry>
   <entry>
-    <title><![CDATA[first-blog]]></title>
+    <title><![CDATA[R-CNN]]></title>
     <url>%2F2017%2F12%2F08%2Ffirst-blog%2F</url>
-    <content type="text"></content>
+    <content type="text"><![CDATA[R-CNNR-CNN是将CNN引入物体检测(Object-Detection)的开山之作，一作Ross Girshick也是CV特别是Object-Detection领域的大牛，之后的许多物体检测的工作都有他的身影。 R-CNN这种region proposals+CNN的框架是后来许多工作SPP-Net, Fast-RCNN, Faster-RCNN的基础。因此读懂R-CNN的架构和流程对读懂之后的文章也至关重要。我希望读者可以从这篇文章中理解以下几点： R-CNN的整个流程是什么样的，这是object-detection工作的核心 R-CNN的优点和缺点在哪里，了解了这个也就知道后面提出的改进的论文的motivation 背景知识在开始阅读论文之前，介绍一些必要的背景知识： 物体检测我们都知道分类任务的目标很简单，给定一张图片，网络输出预测的类别和真实的标记比较，最后用正确率来评测结果。 那么物体检测任务是在干什么呢？简单来说 物体检测不仅需要预测物体的类别，还需要定位出物体的位置，也就是要预测出bounding box表示每一个物体的位置。 另外，图片分类任务每一张图片只需要预测出一种类别，而物体检测对于一张图片需要预测出所有物体（可能有多个类别）。 借用CS231n的课件来直观的感受一下物体检测任务 可以看到，对于第三张图片的3个物体的每一个我们都要给出一个预测框bounding box来预测出物体的位置，并给出物体的类别。 那么给定一个物体检测系统，我们如何去评价它的好坏呢？ 首先我们要知道如何去评价一个bounding box的好坏，这里就有一个很重要的指标叫做IOU。 IOU定义了另个bounding box的重叠程度，如下图所示： A和B分别代表预测的bounding box和ground truth，两个矩形框A和B的重叠程度计算公式就为 $$IOU = \frac{A \cap B}{A \cup B}$$ 好的检测框，应该和标注框有非常大的重叠率，同时又不能对同一个物体重复检测。我们把那些和标注框重叠率很高的定义为true positive(TP)，把那些重叠率低和重复检测的框定义为false positive(FP)。 我们还需要定义两个描述指标：precision 和recall。Precision是true positive 数量除以 true positive和false positive的比值，即所有的检测结果中，正确的比例。 Recall 则是所有truepositive的个数和标注框个数的比值，即所有的目标中，被系统检测出来的比例。 接下来，我们可以把检测的结果根据置信度进行排序， 设一个阈值，然后去计算这个情况下的precision和recall。我们设置不同的阈值，可以得到很多组precision 和recall。 如果我们把所有的precision 和recall 都画到一张图上，x轴代表recall, y轴代表precision,那么我们得到的图，就叫做PR(precision-recall) 曲线。我们可以用这条曲线在x轴上的积分，去描述物体检测的好坏，这个指标叫做Average precision(AP)。 AP值高，就说明系统在比较高recall的情况下，还能保持比较高的的precision。]]></content>
       <categories>
-        <category>入门教程</category>
+        <category>论文解读</category>
       </categories>
       <tags>
-        <tag>hexo</tag>
-        <tag>github</tag>
+        <tag>deep-learning</tag>
+        <tag>computer-vision</tag>
+        <tag>object-detection</tag>
       </tags>
   </entry>
 </search>
