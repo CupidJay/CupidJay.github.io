@@ -96,22 +96,26 @@
 
 
 
-<meta name="description" content="R-CNNR-CNN是将CNN引入物体检测(Object-Detection)的开山之作，一作Ross Girshick也是CV特别是Object-Detection领域的大牛，之后的许多物体检测的工作都有他的身影。 R-CNN这种region proposals+CNN的框架是后来许多工作SPP-Net, Fast-RCNN, Faster-RCNN的基础。因此读懂R-CNN的架构和流程对读懂之">
+<meta name="description" content="R-CNNR-CNN是将CNN引入物体检测(Object-Detection)的开山之作，一作Ross Girshick也是CV特别是Object-Detection领域的大牛，之后的许多物体检测的工作都有他的身影。 R-CNN这种region proposals+CNN的two-stage框架是后来许多工作SPP-Net, Fast-RCNN, Faster-RCNN的基础。因此读懂R-CNN的">
 <meta name="keywords" content="deep-learning,computer-vision,object-detection">
 <meta property="og:type" content="article">
 <meta property="og:title" content="R-CNN">
-<meta property="og:url" content="http://yoursite.com/2017/12/08/first-blog/index.html">
+<meta property="og:url" content="http://yoursite.com/2017/12/08/rcnn/index.html">
 <meta property="og:site_name" content="Hexo">
-<meta property="og:description" content="R-CNNR-CNN是将CNN引入物体检测(Object-Detection)的开山之作，一作Ross Girshick也是CV特别是Object-Detection领域的大牛，之后的许多物体检测的工作都有他的身影。 R-CNN这种region proposals+CNN的框架是后来许多工作SPP-Net, Fast-RCNN, Faster-RCNN的基础。因此读懂R-CNN的架构和流程对读懂之">
+<meta property="og:description" content="R-CNNR-CNN是将CNN引入物体检测(Object-Detection)的开山之作，一作Ross Girshick也是CV特别是Object-Detection领域的大牛，之后的许多物体检测的工作都有他的身影。 R-CNN这种region proposals+CNN的two-stage框架是后来许多工作SPP-Net, Fast-RCNN, Faster-RCNN的基础。因此读懂R-CNN的">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:image" content="http://yoursite.com/Users/mac/Desktop/1.png">
-<meta property="og:image" content="http://yoursite.com/Users/mac/Desktop/2.png">
-<meta property="og:image" content="http://yoursite.com/Users/mac/Desktop/3.jpg">
-<meta property="og:updated_time" content="2017-12-13T04:22:04.474Z">
+<meta property="og:image" content="http://yoursite.com/img/1.png">
+<meta property="og:image" content="http://yoursite.com/img/2.png">
+<meta property="og:image" content="http://yoursite.com/img/3.jpg">
+<meta property="og:image" content="http://yoursite.com/img/nms1">
+<meta property="og:image" content="http://yoursite.com/img/nms2">
+<meta property="og:image" content="http://yoursite.com/img/4.png">
+<meta property="og:image" content="http://yoursite.com/img/5.png">
+<meta property="og:updated_time" content="2017-12-13T08:47:41.735Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="R-CNN">
-<meta name="twitter:description" content="R-CNNR-CNN是将CNN引入物体检测(Object-Detection)的开山之作，一作Ross Girshick也是CV特别是Object-Detection领域的大牛，之后的许多物体检测的工作都有他的身影。 R-CNN这种region proposals+CNN的框架是后来许多工作SPP-Net, Fast-RCNN, Faster-RCNN的基础。因此读懂R-CNN的架构和流程对读懂之">
-<meta name="twitter:image" content="http://yoursite.com/Users/mac/Desktop/1.png">
+<meta name="twitter:description" content="R-CNNR-CNN是将CNN引入物体检测(Object-Detection)的开山之作，一作Ross Girshick也是CV特别是Object-Detection领域的大牛，之后的许多物体检测的工作都有他的身影。 R-CNN这种region proposals+CNN的two-stage框架是后来许多工作SPP-Net, Fast-RCNN, Faster-RCNN的基础。因此读懂R-CNN的">
+<meta name="twitter:image" content="http://yoursite.com/img/1.png">
 
 
 
@@ -140,7 +144,7 @@
 
 
 
-  <link rel="canonical" href="http://yoursite.com/2017/12/08/first-blog/"/>
+  <link rel="canonical" href="http://yoursite.com/2017/12/08/rcnn/"/>
 
 
 
@@ -327,7 +331,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/12/08/first-blog/">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/12/08/rcnn/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="Jay Cao">
@@ -398,8 +402,8 @@
                 <span class="post-meta-item-icon">
                   <i class="fa fa-comment-o"></i>
                 </span>
-                <a href="/2017/12/08/first-blog/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count hc-comment-count" data-xid="2017/12/08/first-blog/" itemprop="commentsCount"></span>
+                <a href="/2017/12/08/rcnn/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count hc-comment-count" data-xid="2017/12/08/rcnn/" itemprop="commentsCount"></span>
                 </a>
               </span>
               <!--/noindex-->
@@ -408,7 +412,7 @@
 
           
           
-             <span id="/2017/12/08/first-blog/" class="leancloud_visitors" data-flag-title="R-CNN">
+             <span id="/2017/12/08/rcnn/" class="leancloud_visitors" data-flag-title="R-CNN">
                <span class="post-meta-divider">|</span>
                <span class="post-meta-item-icon">
                  <i class="fa fa-eye"></i>
@@ -440,12 +444,12 @@
 
       
         <h1 id="R-CNN"><a href="#R-CNN" class="headerlink" title="R-CNN"></a>R-CNN</h1><p><a href="https://arxiv.org/abs/1311.2524" target="_blank" rel="noopener">R-CNN</a>是将CNN引入物体检测(Object-Detection)的开山之作，一作<a href="http://www.rossgirshick.info/" target="_blank" rel="noopener">Ross Girshick</a>也是CV特别是Object-Detection领域的大牛，之后的许多物体检测的工作都有他的身影。</p>
-<p>R-CNN这种region proposals+CNN的框架是后来许多工作<a href="https://arxiv.org/abs/1406.4729" target="_blank" rel="noopener">SPP-Net</a>, <a href="https://arxiv.org/abs/1504.08083" target="_blank" rel="noopener">Fast-RCNN</a>, <a href="https://arxiv.org/abs/1506.01497" target="_blank" rel="noopener">Faster-RCNN</a>的基础。因此读懂R-CNN的架构和流程对读懂之后的文章也至关重要。我希望读者可以从这篇文章中理解以下几点：</p>
+<p>R-CNN这种region proposals+CNN的two-stage框架是后来许多工作<a href="https://arxiv.org/abs/1406.4729" target="_blank" rel="noopener">SPP-Net</a>, <a href="https://arxiv.org/abs/1504.08083" target="_blank" rel="noopener">Fast-RCNN</a>, <a href="https://arxiv.org/abs/1506.01497" target="_blank" rel="noopener">Faster-RCNN</a>的基础。因此读懂R-CNN的架构和流程对读懂之后的文章也至关重要。我希望读者可以从这篇文章中理解以下几点：</p>
 <ul>
 <li>R-CNN的整个<strong>流程</strong>是什么样的，这是object-detection工作的核心</li>
-<li>R-CNN的<strong>优点</strong>和<strong>缺点</strong>在哪里，了解了这个也就知道后面提出的改进的论文的motivation</li>
+<li>R-CNN的<strong>优点</strong>和<strong>缺点</strong>在哪里，了解了这个也就知道后面提出改进的论文的motivation</li>
 </ul>
-<h2 id="背景知识"><a href="#背景知识" class="headerlink" title="背景知识"></a>背景知识</h2><p>在开始阅读论文之前，介绍一些必要的背景知识：</p>
+<h2 id="背景知识"><a href="#背景知识" class="headerlink" title="背景知识"></a>背景知识</h2><p>在开始阅读论文之前，介绍一些必要的背景知识，如果您对这些内容已经非常熟悉了，<strong>feel free to skip</strong>。</p>
 <h3 id="物体检测"><a href="#物体检测" class="headerlink" title="物体检测"></a>物体检测</h3><p>我们都知道分类任务的目标很简单，给定一张图片，网络输出预测的类别和真实的标记比较，最后用正确率来评测结果。</p>
 <p><strong>那么物体检测任务是在干什么呢？</strong>简单来说</p>
 <ol>
@@ -453,16 +457,96 @@
 <li>另外，图片分类任务每一张图片只需要预测出一种类别，而物体检测对于一张图片需要预测出<strong>所有物体</strong>（可能有多个类别）。</li>
 </ol>
 <p>借用<a href="http://cs231n.github.io/" target="_blank" rel="noopener">CS231n</a>的课件来直观的感受一下物体检测任务</p>
-<p><img src="/Users/mac/Desktop/1.png" alt="1"></p>
+<p><img src="/img/1.png" alt="1"></p>
 <p>可以看到，对于第三张图片的3个物体的每一个我们都要给出一个预测框bounding box来预测出物体的位置，并给出物体的类别。</p>
 <p><strong>那么给定一个物体检测系统，我们如何去评价它的好坏呢？</strong></p>
 <p>首先我们要知道如何去评价一个bounding box的好坏，这里就有一个很重要的指标叫做<strong>IOU</strong>。</p>
-<p>IOU定义了另个bounding box的重叠程度，如下图所示： <img src="/Users/mac/Desktop/2.png" alt="2"></p>
+<p>IOU定义了另个bounding box的重叠程度，如下图所示： <img src="/img/2.png" alt="2"></p>
 <p>A和B分别代表预测的bounding box和ground truth，两个矩形框A和B的重叠程度计算公式就为 $$IOU = \frac{A \cap B}{A \cup B}$$  </p>
 <p>好的检测框，应该和标注框有非常大的重叠率，同时又不能对同一个物体重复检测。我们把那些和标注框重叠率很高的定义为<strong>true positive</strong>(TP)，把那些重叠率低和重复检测的框定义为<strong>false positive</strong>(FP)。</p>
 <p>我们还需要定义两个描述指标：precision 和recall。Precision是true positive 数量除以 true positive和false positive的比值，即所有的检测结果中，正确的比例。 Recall 则是所有truepositive的个数和标注框个数的比值，即所有的目标中，被系统检测出来的比例。</p>
 <p>接下来，我们可以把检测的结果根据置信度进行排序， 设一个阈值，然后去计算这个情况下的precision和recall。我们<strong>设置不同的阈值</strong>，可以得到很多组precision 和recall。 如果我们把所有的precision 和recall 都画到一张图上，x轴代表recall, y轴代表precision,那么我们得到的图，就叫做PR(precision-recall) 曲线。我们可以用这条曲线在x轴上的积分，去描述物体检测的好坏，这个指标叫做<strong>Average precision(AP)</strong>。 AP值高，就说明系统在比较高recall的情况下，还能保持比较高的的precision。</p>
-<p><img src="/Users/mac/Desktop/3.jpg" alt="3"></p>
+<p><img src="/img/3.jpg" alt="3"></p>
+<h3 id="非极大值抑制"><a href="#非极大值抑制" class="headerlink" title="非极大值抑制"></a>非极大值抑制</h3><p>以下图为例，在物体检测任务中，我们的目标是一个物体只保留一个最优的框，于是我们就要用到非极大值抑制（Non-maximum Suppression）来抑制那些冗余的框，抑制的过程是一个迭代-遍历-消除的过程。</p>
+<p><img src="/img/nms1" alt=""></p>
+<ol>
+<li><p>我们先将所有的框的得分排序，选中最高分及其对应的框。</p>
+</li>
+<li><p>然后遍历其余的框，如果和当前最高分框的IOU大于一定阈值，我们就将框删除。</p>
+</li>
+<li><p>从未处理的框中继续选出一个得分最高的，重复上述过程。</p>
+<p><img src="/img/nms2" alt=""></p>
+</li>
+</ol>
+<h3 id="迁移学习"><a href="#迁移学习" class="headerlink" title="迁移学习"></a>迁移学习</h3><p>实际上，深度学习在使用CNN的时候很少从头开始训练，通常都是使用预训练的模型（pretrained model）的参数作为初始化。引用cs231n的course note就是</p>
+<blockquote>
+<p>In practice, very few people train an entire Convolutional Network from scratch (with random initialization), because it is relatively rare to have a dataset of sufficient size. Instead, it is common to pretrain a ConvNet on a very large dataset (e.g. ImageNet, which contains 1.2 million images with 1000 categories), and then use the ConvNet either as an initialization or a fixed feature extractor for the task of interest</p>
+</blockquote>
+<p>通常的三种迁移策略如下：</p>
+<ol>
+<li>把CNN当作特征提取，替换掉在ImageNet上训练好的CNN去掉最后的全连接层，冻结除了全连接层的其他层（训练过程不更新）。</li>
+<li>Fine-tune。在训练最后全连接层的同时也更新其他层，比如高层的卷积层。</li>
+<li>pretrained models</li>
+</ol>
+<p>在RCNN中就使用了这种迁移学习。</p>
+<h2 id="文章思路"><a href="#文章思路" class="headerlink" title="文章思路"></a>文章思路</h2><p>R-CNN的贡献主要有三个：</p>
+<ol>
+<li><strong>速度大幅提升</strong>。传统的物体检测的方法很多是采用滑动窗口（Sliding Window）的方式来生成候选框（Region Proposals），计算量很大也非常耗时。R-CNN采用<strong>Selective Search</strong>的方法来生成候选框，简单来说selective search就是找出图片中那些最可能的候选框，大幅减少了候选框的个数。</li>
+<li><strong>全新的架构</strong>。首先生成可能的候选框，然后把这个区域送给CNN去做分类和bounding box的回归。这种<strong>two-stage</strong>的架构是后来许多工作的基础。</li>
+<li><strong>准确率大幅提升</strong>。一般来说，特征越强大，那么分类的效果就越好。所以ImageNet训练的高精确度的分类模型，在R-CNN这个方法中，就是“<strong>巨人的肩膀</strong>”。</li>
+</ol>
+<h2 id="网络结构"><a href="#网络结构" class="headerlink" title="网络结构"></a>网络结构</h2><p>RCNN的算法分为四个步骤：</p>
+<ol>
+<li>对每一张图像采用selective search的方式生成1～2k的候选区域</li>
+<li>对每一个候选区域（需要将每一个候选区域scale到相同的大小$227\times227$），使用CNN提取特征（<del>请思考每一个候选区域的含义</del>）</li>
+<li>特征送入每一类的SVM分类器，判别是否属于该类（分类问题）</li>
+<li>使用回归精细修正候选框的位置（回归问题）</li>
+</ol>
+<p><img src="/img/4.png" alt=""></p>
+<p>上图是原论文中的流程图，cs231n的图能更加直观的看出RCNN的流程。</p>
+<p><img src="/img/5.png" alt=""></p>
+<p>下面说一说训练过程和测试过程的一些细节</p>
+<h3 id="训练过程"><a href="#训练过程" class="headerlink" title="训练过程"></a>训练过程</h3><p>####Supervised pre-training</p>
+<p>首先是有监督的预训练阶段，也就是在背景知识介绍的迁移学习的部分。将在ImageNet分类任务上预训练好的网络的参数直接作为RCNN中CNN部分的初始化参数。</p>
+<h4 id="Fine-tuning"><a href="#Fine-tuning" class="headerlink" title="Fine-tuning"></a>Fine-tuning</h4><p>假设要检测的物体类别有N类，将预训练的CNN的最后一层替换成有N+1个输出的分类器（N+1代表N个类别加上1个background）。定义region proposals和ground truth的IOU（参加背景知识）$\geq 0.5$的视为positive，其余的视为negative。每个batch-size设为128，包括32个positive和96个negative。</p>
+<p>####Object category classifiers</p>
+<p>接下来就是正式的训练了。这个时候positive和negative的定义和fine-tune阶段有所不同，当$IOU\le 0.3$定义为负样本（作者实验得出）。</p>
+<p>与fine-tune阶段的第二个不同是对每一个类都有一个二分类的SVM，N个类对应的就有N个SVM。</p>
+<h4 id="Bounding-box-Regression"><a href="#Bounding-box-Regression" class="headerlink" title="Bounding-box Regression"></a>Bounding-box Regression</h4><p>目标检测问题的衡量标准是IOU，许多看似准确的检测结果，往往因为候选框不过准确导致IOU很小，所以需要一个位置精修的回归。</p>
+<p>每一个候选框都可以用四个参数$x,y,w,h$来描述，其中$(x,y)$代表左上角坐标，$(w,h)$代表宽度和高度，通过一个线性回归器对这四个值进行回归，以此来修正Bounding Box</p>
+<h3 id="测试过程"><a href="#测试过程" class="headerlink" title="测试过程"></a>测试过程</h3><p>说完了训练过程，下面说说测试过程。</p>
+<p>首先对于一张测试图片，我们通过selective search的方法生成2000个候选区域，每一个候选区域都送入CNN生成4096维的特征，送入SVM得到N个score。这样对于2000个候选区域，我们就得到了$2000\times N$的score matrix。</p>
+<p>然后对每一个类别都采用非极大值抑制选出候选框，一次处理一个类别，共处理N次。</p>
+<p>测试过程的速度大概是GPU上13s/image，CPU上53s/image（可以看到速度很慢，这对于要求实施检测的任务显然不过关）。作者认为CNN参数共享，得到的低维特征使得R-CNN非常高效。</p>
+<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><blockquote>
+<p>论文发表的2014年，DPM已经进入瓶颈期，即使使用复杂的特征和结构得到的提升也十分有限。本文将深度学习引入检测领域，一举将PASCAL VOC上的检测率<strong>从35.1%提升到53.7%</strong>。 </p>
+</blockquote>
+<p>R-CNN不管从速度还是精度上都比之前的工作有了很大的改进，这很大部分得益于CNN的引进。但是不得不说，R-CNN也有许多不足之处，尤其是速度，这也是后来许多改进工作的出发点：</p>
+<ol>
+<li><p>多个特定的训练目标(ad hoc training objectives)</p>
+<ul>
+<li><p>Fine-tune的时候用softmax classifier(log loss)</p>
+</li>
+<li><p>训练的时候分类用的线形SVM(hinge loss)</p>
+</li>
+<li><p>训练的时候用的bounding-box regression(least squares)</p>
+<p>​</p>
+</li>
+</ul>
+</li>
+<li><p>训练过程很慢（84h），占用很多内存</p>
+</li>
+<li><p>测试过程也很慢，离实时检测的目标很远</p>
+</li>
+</ol>
+<p>接下来会介绍SPP-Net, Fast-RCNN, Faster-RCNN等在R-CNN基础上的改进工作，也会介绍一下one-stage的物体检测YOLO和YOLO9000。</p>
+<h2 id="参考文献"><a href="#参考文献" class="headerlink" title="参考文献"></a>参考文献</h2><ol>
+<li>Rich feature hierarchies for Accurate Object Detection and Segmentation</li>
+<li><a href="http://cs231n.github.io/" target="_blank" rel="noopener">CS231n</a></li>
+<li><a href="http://blog.csdn.net/hjimce/article/details/50187029" target="_blank" rel="noopener">基于R-CNN的物体检测</a></li>
+<li><a href="http://blog.csdn.net/shenxiaolu1984/article/details/51066975" target="_blank" rel="noopener">[目标检测]RCNN算法详解</a></li>
+<li><a href="http://blog.csdn.net/shuzfan/article/details/52711706" target="_blank" rel="noopener">NMS-非极大值抑制</a></li>
+</ol>
 
       
     </div>
@@ -672,7 +756,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#R-CNN"><span class="nav-number">1.</span> <span class="nav-text"><a href="#R-CNN" class="headerlink" title="R-CNN"></a>R-CNN</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#背景知识"><span class="nav-number">1.1.</span> <span class="nav-text"><a href="#&#x80CC;&#x666F;&#x77E5;&#x8BC6;" class="headerlink" title="&#x80CC;&#x666F;&#x77E5;&#x8BC6;"></a>&#x80CC;&#x666F;&#x77E5;&#x8BC6;</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#物体检测"><span class="nav-number">1.1.1.</span> <span class="nav-text"><a href="#&#x7269;&#x4F53;&#x68C0;&#x6D4B;" class="headerlink" title="&#x7269;&#x4F53;&#x68C0;&#x6D4B;"></a>&#x7269;&#x4F53;&#x68C0;&#x6D4B;</span></a></li></ol></li></ol></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#R-CNN"><span class="nav-number">1.</span> <span class="nav-text"><a href="#R-CNN" class="headerlink" title="R-CNN"></a>R-CNN</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#背景知识"><span class="nav-number">1.1.</span> <span class="nav-text"><a href="#&#x80CC;&#x666F;&#x77E5;&#x8BC6;" class="headerlink" title="&#x80CC;&#x666F;&#x77E5;&#x8BC6;"></a>&#x80CC;&#x666F;&#x77E5;&#x8BC6;</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#物体检测"><span class="nav-number">1.1.1.</span> <span class="nav-text"><a href="#&#x7269;&#x4F53;&#x68C0;&#x6D4B;" class="headerlink" title="&#x7269;&#x4F53;&#x68C0;&#x6D4B;"></a>&#x7269;&#x4F53;&#x68C0;&#x6D4B;</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#非极大值抑制"><span class="nav-number">1.1.2.</span> <span class="nav-text"><a href="#&#x975E;&#x6781;&#x5927;&#x503C;&#x6291;&#x5236;" class="headerlink" title="&#x975E;&#x6781;&#x5927;&#x503C;&#x6291;&#x5236;"></a>&#x975E;&#x6781;&#x5927;&#x503C;&#x6291;&#x5236;</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#迁移学习"><span class="nav-number">1.1.3.</span> <span class="nav-text"><a href="#&#x8FC1;&#x79FB;&#x5B66;&#x4E60;" class="headerlink" title="&#x8FC1;&#x79FB;&#x5B66;&#x4E60;"></a>&#x8FC1;&#x79FB;&#x5B66;&#x4E60;</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#文章思路"><span class="nav-number">1.2.</span> <span class="nav-text"><a href="#&#x6587;&#x7AE0;&#x601D;&#x8DEF;" class="headerlink" title="&#x6587;&#x7AE0;&#x601D;&#x8DEF;"></a>&#x6587;&#x7AE0;&#x601D;&#x8DEF;</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#网络结构"><span class="nav-number">1.3.</span> <span class="nav-text"><a href="#&#x7F51;&#x7EDC;&#x7ED3;&#x6784;" class="headerlink" title="&#x7F51;&#x7EDC;&#x7ED3;&#x6784;"></a>&#x7F51;&#x7EDC;&#x7ED3;&#x6784;</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#训练过程"><span class="nav-number">1.3.1.</span> <span class="nav-text"><a href="#&#x8BAD;&#x7EC3;&#x8FC7;&#x7A0B;" class="headerlink" title="&#x8BAD;&#x7EC3;&#x8FC7;&#x7A0B;"></a>&#x8BAD;&#x7EC3;&#x8FC7;&#x7A0B;</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#Fine-tuning"><span class="nav-number">1.3.1.1.</span> <span class="nav-text"><a href="#Fine-tuning" class="headerlink" title="Fine-tuning"></a>Fine-tuning</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Bounding-box-Regression"><span class="nav-number">1.3.1.2.</span> <span class="nav-text"><a href="#Bounding-box-Regression" class="headerlink" title="Bounding-box Regression"></a>Bounding-box Regression</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#测试过程"><span class="nav-number">1.3.2.</span> <span class="nav-text"><a href="#&#x6D4B;&#x8BD5;&#x8FC7;&#x7A0B;" class="headerlink" title="&#x6D4B;&#x8BD5;&#x8FC7;&#x7A0B;"></a>&#x6D4B;&#x8BD5;&#x8FC7;&#x7A0B;</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#总结"><span class="nav-number">1.4.</span> <span class="nav-text"><a href="#&#x603B;&#x7ED3;" class="headerlink" title="&#x603B;&#x7ED3;"></a>&#x603B;&#x7ED3;</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#参考文献"><span class="nav-number">1.5.</span> <span class="nav-text"><a href="#&#x53C2;&#x8003;&#x6587;&#x732E;" class="headerlink" title="&#x53C2;&#x8003;&#x6587;&#x732E;"></a>&#x53C2;&#x8003;&#x6587;&#x732E;</span></a></li></ol></li></ol></div>
             
 
           </div>
@@ -826,7 +910,7 @@
 		_hcwp.push({widget:"Bloggerstream", widget_id: 98858, selector:".hc-comment-count", label: "{\%COUNT%\}" });
 
 		
-		_hcwp.push({widget:"Stream", widget_id: 98858, xid: "2017/12/08/first-blog/"});
+		_hcwp.push({widget:"Stream", widget_id: 98858, xid: "2017/12/08/rcnn/"});
 		
 
 		(function() {
@@ -984,6 +1068,28 @@
   
 
   
+  
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({
+        tex2jax: {
+          inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+          processEscapes: true,
+          skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+        }
+      });
+    </script>
+
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for (i=0; i < all.length; i += 1) {
+          all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+      });
+    </script>
+    <script type="text/javascript" src="//cdn.bootcss.com/mathjax/2.7.1/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+  
+
 
   
 
